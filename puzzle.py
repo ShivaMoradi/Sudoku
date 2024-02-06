@@ -13,38 +13,39 @@ given = [
     [0, 0, 0, 4, 1, 9, 0, 0, 5],
     [0, 0, 0, 0, 8, 0, 0, 7, 9]
 ]
-# convertwra matrixen till NumPy matrix
+# Konvertera matrisen till NumPy matrix
 ngiven = np.matrix(given)
-# skriva ut matrixen bara för att se hur ser det ut
+# skriva ut matrisen bara för att se hur ser det ut
 print(ngiven)
 
 
-# gör snyggt matrixen för att bli mer läsbar
+# gör matrisen snyggt för att bli mer läsbar
 def prettify():
     print("Output is:  ")
-    # börja med kolumn med index 0 och radden med index 0 och titta rad med rad
+    # börja med kolumn med index 0 och raden med index 0 och titta rad med rad
     j = 0
     for row in given:
         i = 0
         j += 1
         for item in row:
             i += 1
-            print(f" {item} ", end='')  # skriva ut vaeje item i matrixen och lägg till en space
-            if i % 3 == 0 and i < 9:  # gör sammasak i rad för 3*3 underrutnät och även lägg en | melan varje 3*3 underrutnät
+            print(f" {item} ", end='')  # skriva ut varje item i matrisen och lägg till en space
+            # gör samma sak i rad för 3*3 underrutnät och även lägg till en "|" melan varje 3*3 underrutnät
+            if i % 3 == 0 and i < 9:
                 print(" | ", end='')
         print()  # Skriva ut det
-        if j % 3 == 0 and j < 9:  # Till kolumnerna lägg ' - ' 11 gånger för att bli snygast
+        if j % 3 == 0 and j < 9:  # Till kolumnerna lägg ' - ' 11 gånger för att bli snyggast
             print(' - ' * 11)
 
 
 prettify()
 
 
-# definierar funktion pussel board och idintifierar rad, kolum och siffran som användaren gissar
+# definierar funktion pussel board och identifierar rad, kolumn och siffran som användaren gissar
 def board(row, column):
     global given
     number = input("Guesse a number (1-9): ")  # En användare kan gissa en siffran mellan 1-9
-    try:  # vilkor för att nummret ska vara intiger och mellan 1-9 annars det är fel
+    try:  # villkor för att siffran ska vara integer och mellan 1-9 annars det är fel
         number = int(number)
         if 1 <= number < 10:
             print(f"You guessed: ", number)
@@ -54,7 +55,7 @@ def board(row, column):
     except ValueError:
         print(f"Please enter a valid number")
         return False
-    # Loopar mellan 0-9 och kontrollerar om nummret är i raden
+    # Loopar mellan 0-9 och kontrollerar om siffran är i raden
     for i in range(9):
         if given[row][i] == number:
             print(False)
@@ -69,7 +70,7 @@ def board(row, column):
     x0 = (column // 3) * 3  # Sektion börjat från row med index 0 till 2 och * 3 för att skapa nästa sektioner
     y0 = (row // 3) * 3  # Sektion börjat från kolumn med index 0 till 2 och * 3 för att skapa nästa sektioner
 
-    # finns nummret inne i 3x3-underrutnät?
+    # finns siffran inne i 3x3-underrutnät?
     for i in range(3):
         for j in range(3):
             if given[y0 + i][x0 + j] == number:
@@ -81,19 +82,19 @@ def board(row, column):
     return True
 
 
-def solve(given):  # Funktion till lösa pussle med backtracking metod
+def solve(given):  # Funktion till lösa pusslet med backtracking metod
     for row in range(9):  # till alla rader i range 9
         for column in range(9):  # och även till alla kolumner i range 9
-            if given[row][column] == 0:  # om cellet är 0
-                for number in range(1, 10):  # lägg gissade nummret som är i range 9 i cellet
+            if given[row][column] == 0:  # om rutan är 0
+                for number in range(1, 10):  # lägg gissade siffran som är i range 9 i rutan
                     if board(row, column):
                         prettify()  # skriva ut gissade numret bara för att se det
-                        given[row][column] = number  # fylla cellet med gissade numret
+                        given[row][column] = number  # fylla rutan med gissade numret
                         if solve(given):  # om det lösas visa True
                             return True
-                        given[row][column] = 0  # gå upp igen i den stegrt som kontrollerar cellet är 0
+                        given[row][column] = 0  # gå upp igen i den steget som kontrollerar rutan är 0
                 return False
 
 
-solve(given)  # Anropar solve funktionen med givande matrix
-prettify()
+solve(given)  # Anropar solve funktionen med givande matris
+prettify()  # gör det resultaten snyggt
