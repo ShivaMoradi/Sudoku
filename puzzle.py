@@ -19,7 +19,6 @@ ngiven = np.matrix(given)
 print(ngiven)
 
 
-
 # gör snyggt matrixen för att bli mer läsbar
 def prettify():
     print("Output is:  ")
@@ -96,6 +95,5 @@ def solve(given):  # Funktion till lösa pussle med backtracking metod
                 return False
 
 
-
-solve(given) # Anropar solve funktionen med givande matrix
+solve(given)  # Anropar solve funktionen med givande matrix
 prettify()
