@@ -13,9 +13,9 @@ given = [
     [0, 0, 0, 4, 1, 9, 0, 0, 5],
     [0, 0, 0, 0, 8, 0, 0, 7, 9]
 ]
-# Konvertera matrisen till NumPy matrix
+# Konvertera matrisen till NumPy matris
 ngiven = np.matrix(given)
-# skriva ut matrisen bara för att se hur ser det ut
+# skriva ut numpy matrisen bara för att se hur ser det ut
 print(ngiven)
 
 
@@ -77,7 +77,7 @@ def board(row, column):
                 print(False)
                 return False
 
-    given[row][column] = number
+    given[row][column] = number # fylla rutan med användare numret
     print(True)
     return True
 
@@ -87,12 +87,14 @@ def solve(given):  # Funktion till lösa pusslet med backtracking metod
         for column in range(9):  # och även till alla kolumner i range 9
             if given[row][column] == 0:  # om rutan är 0
                 for number in range(1, 10):  # lägg gissade siffran som är i range 9 i rutan
+                    # Skapat kopi från ny given för att vissa uppdaterade matrisen varje gång
+                    temp_given = [row.copy() for row in given]
                     if board(row, column):
-                        prettify()  # skriva ut gissade numret bara för att se det
-                        given[row][column] = number  # fylla rutan med gissade numret
+                        prettify()
+                        temp_given[row][column] = number  # fylla rutan med gissade numret
                         if solve(given):  # om det lösas visa True
                             return True
-                        given[row][column] = 0  # gå upp igen i den steget som kontrollerar rutan är 0
+                        given = temp_given  # fyller given matrisen med ny Values
                 return False
 
 
